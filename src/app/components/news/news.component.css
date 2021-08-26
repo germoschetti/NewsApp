@@ -1,0 +1,11 @@
+.news-text{
+    line-height: 1.5rem;
+    height: 5.5rem;
+    overflow: hidden;
+    text-overflow: -o-ellipsis-lastline;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}

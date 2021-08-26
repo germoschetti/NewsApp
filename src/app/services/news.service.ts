@@ -1,20 +1,30 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams,  } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NewsService {
   url:string;
-  key:string;
+  keyHeaders:HttpHeaders;
   constructor( private http: HttpClient) {
-    this.url = 'https://newsapi.org/v2/top-headlines';
-    this.key = 'ad0bcc7bedfd41048e48687ca9b068c2';
+    this.url = 'https://api.newscatcherapi.com/v2/';
+    this.keyHeaders = new HttpHeaders({'x-api-key': '-3bN7X6FUBMOqpiNiOMMhYa5fxNOC-_Wud0hseedsE0'})
    }
 
-  getNews(){
-    this.http.get(this.url + '?country=ar&apiKey=' + this.key)
+  getNews(): Observable<object>{
+    return this.http.get(this.url + 'latest_headlines?topic=news&lang=es', {headers: this.keyHeaders} )
   }
+
+  getNewsByTopic(topic): Observable<object>{
+    return this.http.get(this.url + 'latest_headlines?topic='+ topic +'&lang=es', {headers: this.keyHeaders})
+  }
+
+  searchNews(wordsToSearch): Observable<object>{
+    return this.http.get(this.url + 'search?q='+ wordsToSearch +'&lang=es', {headers: this.keyHeaders})
+  }
+
 
 }
 

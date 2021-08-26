@@ -1,1 +1,25 @@
-<p>news works!</p>
+<div class="container">
+    <!--Buscador-->
+    <div class="col-12 my-5">
+        <form class="form-inline col-12 ">
+            <input class="form-control col mr-sm-2" type="search" [(ngModel)]="wordsToSearch" name="wordsToSearch" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)='searchNews()'>Search</button>
+        </form>
+    </div>
+
+    <!--Mostrar Noticias-->
+    <div class="row">
+        <div class="col-md-4 p-1" *ngFor='let new of news'>
+            <a [href]="new.link" target="__blank">
+                <div class="card mt-2">
+                    <img class="card-img-top" height="280px" [src]="new.media" alt="Card image cap">
+                    <div class="card-body news-text">
+                        {{new.title}}
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+
+</div>
