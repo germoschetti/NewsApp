@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NewsService } from 'src/app/services/news.service';
+
 
 @Component({
   selector: 'app-news',
@@ -7,42 +8,69 @@ import { NewsService } from 'src/app/services/news.service';
   styleUrls: ['./news.component.css']
 })
 export class NewsComponent implements OnInit {
+  @Input() selectedTopic: string
   news: object;
-  wordsToSearch:string
+  wordsToSearch: string;
+  error: boolean;
+  messageErr: string;
+  spinner: boolean;
 
   constructor(private _news: NewsService) {
-    this.getFirstNews()
+    this.spinner = false;
+    this.error = false;
+    this.getFirstNews();
   }
 
   ngOnInit(): void {
   }
 
+  // Get news when the page is loading
   getFirstNews() {
+    this.spinner = true;
     this._news.getNews().subscribe(data => {
+      this.spinner = false;
       this.news = data['articles'];
-      console.log(this.news['articles'])
     },
       err => {
-        console.log(err)
+        this.spinner = false;
+        this.showErr('Oops sorry, we could not find results currently');
+        console.log(err);
+
       });
   }
 
-  getNewsByTopic(topic:string){
-    this._news.getNewsByTopic(topic).subscribe(data=>{
-      this.news = data['articles']
-      console.log(data)
-    },
-    err =>{
-      console.log(err)
-    })
+
+  // Search news by input
+  searchNews() {
+    this.spinner = true;
+    if (this.wordsToSearch == undefined || this.wordsToSearch.trim() == '') {
+      this.spinner = false;
+      this.showErr('Oops sorry, we could not find results for this search');
+    } else {
+      this.error = false;
+      this.selectedTopic = undefined;
+      this._news.searchNews(this.wordsToSearch).subscribe(data => {
+        if (data['status'] == "No matches for your search.") {
+          this.spinner = false;
+          this.showErr('Oops sorry, we could not find results for this search');
+        } else {
+          this.error = false;
+          this.spinner = false;
+          this.news = data['articles'];
+        }
+      },
+        err => {
+          this.spinner = false;
+          console.log(err);
+          this.showErr('Ops sorry, we could not find results for this search');
+
+        })
+    }
+
   }
 
-  searchNews(){
-    this._news.searchNews(this.wordsToSearch).subscribe(data=>{
-      this.news = data['articles']
-    },
-    err=>{
-      console.log(err)
-    })
+  showErr(message) {
+    this.error = true;
+    this.messageErr = message;
   }
 }

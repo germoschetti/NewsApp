@@ -2,17 +2,23 @@
     <!--Buscador-->
     <div class="col-12 my-5">
         <form class="form-inline col-12 ">
-            <input class="form-control col mr-sm-2" type="search" [(ngModel)]="wordsToSearch" name="wordsToSearch" placeholder="Search" aria-label="Search">
+            <input class="form-control col mr-sm-2" type="search" [(ngModel)]="wordsToSearch" name="wordsToSearch"
+                placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)='searchNews()'>Search</button>
         </form>
     </div>
 
-    <!--Mostrar Noticias-->
-    <div class="row">
-        <div class="col-md-4 p-1" *ngFor='let new of news'>
+    <!-- Error -->
+    <div class="alert alert-danger" *ngIf='error == true' role="alert">
+        {{messageErr}}
+    </div>
+
+    <!-- Show news by topics-->
+    <div class="row" *ngIf='selectedTopic'>
+        <div class="col-md-4 p-1" *ngFor='let new of selectedTopic'>
             <a [href]="new.link" target="__blank">
                 <div class="card mt-2">
-                    <img class="card-img-top" height="280px" [src]="new.media" alt="Card image cap">
+                    <img class="card-img-top" height="280px" [src]="new.media" onerror = "this.src='https://s.france24.com/media/display/d1676b6c-0770-11e9-8595-005056a964fe/w:1280/p:16x9/news_1920x1080.png'" alt="Card image cap">
                     <div class="card-body news-text">
                         {{new.title}}
                     </div>
@@ -21,5 +27,24 @@
         </div>
     </div>
 
+    <!--Show generals news-->
+    <div class="row" *ngIf='selectedTopic == undefined'>
+        <div class="col-md-4 p-1" *ngFor=' let new of news'>
+            <a [href]="new.link" target="__blank">
+                <div class="card mt-2">
+                    <img class="card-img-top" height="280px" [src]="new.media" onerror="this.src='https://s.france24.com/media/display/d1676b6c-0770-11e9-8595-005056a964fe/w:1280/p:16x9/news_1920x1080.png'" alt="Card image cap">
+                    <div class="card-body news-text">
+                        {{new.title}}
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Spinner -->
+    <div class="spinner" *ngIf='spinner'>
+        <div class="cube1"></div>
+        <div class="cube2"></div>
+      </div>
 
 </div>

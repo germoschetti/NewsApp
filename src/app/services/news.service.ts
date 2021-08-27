@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 export class NewsService {
   url:string;
   keyHeaders:HttpHeaders;
+  
   constructor( private http: HttpClient) {
     this.url = 'https://api.newscatcherapi.com/v2/';
     this.keyHeaders = new HttpHeaders({'x-api-key': '-3bN7X6FUBMOqpiNiOMMhYa5fxNOC-_Wud0hseedsE0'})
