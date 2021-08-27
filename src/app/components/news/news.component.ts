@@ -21,11 +21,7 @@ export class NewsComponent implements OnInit {
     this.getFirstNews();
   }
 
-  ngOnInit(): void {
-    setInterval(()=>{
-      console.log(this.selectedTopic)
-    }, 4000)
-  }
+  ngOnInit(): void {}
 
   // Get news when the page is loading
   getFirstNews() {
