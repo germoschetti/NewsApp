@@ -8,7 +8,7 @@ import { NewsService } from 'src/app/services/news.service';
   styleUrls: ['./news.component.css']
 })
 export class NewsComponent implements OnInit {
-  @Input() selectedTopic: string
+  @Input() selectedTopic: object
   news: object;
   wordsToSearch: string;
   error: boolean;
@@ -41,6 +41,7 @@ export class NewsComponent implements OnInit {
 
   // Search news by input
   searchNews() {
+    this.selectedTopic = undefined;
     this.spinner = true;
     if (this.wordsToSearch == undefined || this.wordsToSearch.trim() == '') {
       this.spinner = false;

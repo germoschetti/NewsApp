@@ -11,7 +11,7 @@ export class NewsService {
   
   constructor( private http: HttpClient) {
     this.url = 'https://api.newscatcherapi.com/v2/';
-    this.keyHeaders = new HttpHeaders({'x-api-key': '-3bN7X6FUBMOqpiNiOMMhYa5fxNOC-_Wud0hseedsE0'})
+    this.keyHeaders = new HttpHeaders({'x-api-key': 'gB31RbknPR1V7DqmaqAIUQsr_naVy4et2E08K_KJSd4'})
    }
 
   getNews(): Observable<object>{
